@@ -1,7 +1,9 @@
 #Imports
-import pygame, sys
+import pygame
+import sys
 from pygame.locals import *
-import random, time
+import random
+import time
 
 #Initialzing 
 pygame.init()
@@ -18,8 +20,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 #Other Variables for use in the program
-SCREEN_WIDTH = 400
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 800
 SPEED = 5
 SCORE = 0
 
@@ -31,7 +33,7 @@ game_over = font.render("Game Over", True, BLACK)
 background = pygame.image.load("AnimatedStreet.png")
 
 #Create a white screen 
-DISPLAYSURF = pygame.display.set_mode((400,600))
+DISPLAYSURF = pygame.display.set_mode((400, 600))
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption("Game")
 
@@ -61,7 +63,14 @@ class Player(pygame.sprite.Sprite):
        
     def move(self):
         pressed_keys = pygame.key.get_pressed()
-        
+
+        if self.rect.top > 0:
+            if pressed_keys[K_UP]:
+                self.rect.move_ip(0, -5)
+        if self.rect.bottom < SCREEN_HEIGHT:
+            if pressed_keys[K_DOWN]:
+                self.rect.move_ip(0, 5)
+
         if self.rect.left > 0:
               if pressed_keys[K_LEFT]:
                   self.rect.move_ip(-5, 0)
@@ -81,6 +90,7 @@ all_sprites = pygame.sprite.Group()
 all_sprites.add(P1)
 all_sprites.add(E1)
 
+#255, 202, 24
 #Adding a new User event 
 INC_SPEED = pygame.USEREVENT + 1
 pygame.time.set_timer(INC_SPEED, 1000)
